@@ -288,7 +288,8 @@ function moveMarker(xpos, ypos)
 					//Our offset for this one is horizontal center, bottom of image.
 					var offsetX = imgCrsr.width / 2;
 					var offsetY = imgCrsr.height;
-					drawImg(this.x - offsetX, this.y - offsetY, imgbb16);
+					//drawImg(this.x - offsetX, this.y - offsetY, imgbb16);
+					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle());
 				}
 
 			 return this;
