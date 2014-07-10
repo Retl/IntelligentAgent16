@@ -360,9 +360,9 @@ function moveMarker(xpos, ypos)
 			{
 				if (this.visible && this.active)
 				{
-					var offsetX = imgBln1.width / 2;
-					var offsetY = imgBln1.height / 2;
-					drawImg(this.x - offsetX, this.y - offsetY, imgBln1);
+					var offsetX = 8;
+					var offsetY = 8;
+					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle(16));
 				}
 			}
 

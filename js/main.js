@@ -26,12 +26,4 @@ var imgCrsr = new Image;
 imgCrsr.src='./images/boundbox16x16.png';
 
 var imgbb16 = new Image;
-imgbb16.src='./images/fp_downhard_lr.png';
-
-var imgBln1 = new Image;
-imgBln1.src='./images/bln1_s.png';
-
-
-
-var imgFirstPostDownHard = new Image;
-imgFirstPostDownHard.src='./images/fp_downhard.png';		//The page will blow up if we don't load the image data before we get to the draw. Better to put the images in the onload or header somewhere.
+imgbb16.src='./images/fp_downhard_lr.png';//The page will blow up if we don't load the image data before we get to the draw. Better to put the images in the onload or header somewhere.
