@@ -1,0 +1,118 @@
+/*
+Page Author: Carlis Moore
+Creation Date: 10 July 2014
+Last Modified:  10 July 2014
+Purpose: Cascading stylesheet for the game Intelligent Agent 16.
+
+Permissions: If you want to use elements from this stylesheet, please ask me first. I'm generally pretty open and willing to share, but it's better to ask than to not. You can email me at carlis.moore@gmail.com.
+*/
+
+.hexButton
+{
+	background-image:url('../images/hexagon_button_bg.png');
+	background-repeat:no-repeat;
+	background-position:center center;
+
+	text-align:center;
+	line-height:127px;
+
+	font-size: 14px;
+
+	width:127px;
+	height:127px;
+	padding:0px;
+	border:0px;
+	margin:0px;
+}
+
+.floatingProfileImage
+{
+	float:left;
+	padding:0px;
+	margin-right:6px;
+	text-align:center;
+	height:100px;
+}
+
+.floatingSettlementImage
+{
+	float:left;
+	padding:0px;
+	margin-right:6px;
+	text-align:center;
+	height:200px;
+}
+
+.profileDiv
+{
+	height:100px;
+	padding:6px;
+	border-radius: 5px;
+}
+
+.settlementDiv
+{
+	height:200px;
+	padding:6px;
+	border-radius: 5px;
+}
+
+a:hover.hexButton
+{
+	background-image:url('../images/hexagon_button_bgh.png');
+}
+
+a:active.hexButton
+{
+	background-image:url('../images/hexagon_button_bga.png');
+}
+
+a:visited.hexButton
+{
+	background-image:url('../images/hexagon_button_bgv.png');
+}
+
+table
+{
+	text-align:center;
+}
+
+.navbar
+{
+	position:relative;
+	height:256px;
+}
+
+.blueGlow
+{
+	text-align:center;
+	font-style:italic;
+	color: #63c0f5;
+	text-shadow: 0 0 5px rgba(104, 182, 255, 0.5);
+}
+
+.pinkGlow
+{
+	text-align:center;
+	font-style:italic;
+	color: #fab3d1;
+	text-shadow: 0 0 5px rgba(250, 179, 209, 0.5);
+}
+
+footer
+{
+	font-size:8pt;
+	text-align:center;
+}
+
+.center
+{
+	text-align:center;
+}
+
+
+video
+{
+	width: 80%;
+	height:80%;
+}
