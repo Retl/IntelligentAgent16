@@ -18,17 +18,30 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/ia16.css" media="screen" />
 
     <title>Intelligent Agent 16</title>
-	<script type="text/javascript" src="js/canvasdraw.js"></script>
+	<script type="text/javascript" src="js/utilities.js"></script>
 	<script type="text/javascript" src="js/geometry.js"></script>
+	<script type="text/javascript" src="js/canvasdraw.js"></script>
+	<script type="text/javascript" src="js/gldraw.js"></script>
+	<script type="text/javascript" src="js/balloon.js"></script>
+	<script type="text/javascript" src="js/player.js"></script>
 	<script type="text/javascript" src="js/ia16.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
   </head>
 
-  <body onkeydown="handleKeyPress(event);" onkeyup="handleKeyRelease(event);" onmousedown="handleMouseDown(event);" onmouseup="handleMouseUp(event);">
+  <body onLoad="main()">
     <div>
       <section id="main_content">
 		<div id="mainDiv" onmousemove="updateMousePosition(event)" >
-		<canvas id="mainCanvas" width="800" height="600"></canvas>
+		<canvas onkeydown="handleKeyPress(event);" onkeyup="handleKeyRelease(event);" onmousedown="handleMouseDown(event);" onmouseup="handleMouseUp(event);" id="mainCanvas" width="800" height="600">
+			Your browser doesn't like the HTML5 Canvas element.
+		</canvas>
+		<canvas onkeydown="handleKeyPress(event);" onkeyup="handleKeyRelease(event);" onmousedown="handleMouseDown(event);" onmouseup="handleMouseUp(event);" id="mainGL" width="800" height="600">
+			Your browser doesn't like the HTML5 Canvas element.
+		</canvas>
+		<script type="text/javascript">
+		var gameWidth = document.getElementById("mainCanvas").width;
+		var gameHeight = document.getElementById("mainCanvas").height;
+		</script>
 		<!--
 		<a class="btn" onClick="if(isUserOnMobile()){document.getElementById('mainCanvas').webkitRequestFullscreen();}">Go Fullscreen</a>
 		-->
