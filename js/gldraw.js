@@ -7,15 +7,15 @@ var GLDraw = function ()
 
 GLDraw.start = function ()
 {
-	var glCanvas = document.getElementById("mainCanvas");
-	gl = this.initWebGL(glCanvas);
+	var glCanvas = document.getElementById("mainGL");
+	gl = GLDraw.initWebGL(glCanvas);
 
 	if (gl)
 	{
 		gl.clearColor = (0.0, 0.0, 0.0, 1.0);
 		gl.enable(gl.DEPTH_TEST);
-		g1.depthFunc(g1.LEQUAL);
-		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH__BUFFER_BIT);
+		gl.depthFunc(gl.LEQUAL);
+		gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
 	}
 	else
 	{
@@ -23,7 +23,23 @@ GLDraw.start = function ()
 	}
 };
 
-GLDraw.initWebGL = function ()
+GLDraw.clear = function ()
 {
-	;
+	gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+}
+
+GLDraw.initWebGL = function (canvas)
+{
+	gl = null;
+	try
+	{
+		gl = canvas.getContext("webgl") || glCanvas.getContext("experimental-webgl");
+	}
+	catch(e)
+	{
+		alert("Unable to initialize WebGL. Your browser may not support it.");
+		gl = null;
+	}
+	
+	return gl;
 };

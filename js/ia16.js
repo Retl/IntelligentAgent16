@@ -188,6 +188,12 @@ function moveMarker(xpos, ypos)
 				}
 			}
 			
+			if (gl != null)
+			{
+				//Do stuff?
+				GLDraw.clear();
+			}
+			
 			//Process the inputs captured...
 			processSpecialKeys();
 			//NOTE: All input processing should be done before you end the input cycle.
