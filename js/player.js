@@ -77,8 +77,7 @@ function player (xpos, ypos, myid, mynum)
 			}
 			
 			//Make the graphic spin!
-			this.rotationOffset += dt * (Math.abs(this.xspeed) + Math.abs(this.yspeed) ) + 0.05;
-			if (this.rotationOffset > this.maxRotationOffset) {this.rotationOffset -= this.maxRotationOffset;}
+			this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)));
 		};
 	
 	this.draw = function()
@@ -86,8 +85,21 @@ function player (xpos, ypos, myid, mynum)
 				//Our offset for this one is horizontal center, bottom of image.
 				var offsetX = 0;
 				var offsetY = 0;
-				CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset), '#ffffff');
-				CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset), '#ffffff');
+				
+				var myGeom = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
+				var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset);
+				
+				if (gl)
+				{
+					//PLACEHOLDER - replace all of this with GL drawing instructions.
+					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
+					CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+				}
+				else
+				{
+					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
+					CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+				}
 			};
 	
 	//END: Methods

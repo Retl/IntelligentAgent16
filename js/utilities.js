@@ -18,3 +18,32 @@ Utilities.randomIntInRange = function(min, max)
 	var range = Math.abs(max - min) + 1;
 	return Math.floor((Math.random() * range) + min);
 };
+
+Utilities.rotationalSpin = function (current, max, rateScale)
+{
+	if (!Utilities.IsNumber(current))
+	{
+		current = 0;
+	}
+	
+	if (!Utilities.IsNumber(max))
+	{
+		max = 10;
+	}
+	
+	if (!Utilities.IsNumber(rateScale))
+	{
+		rateScale = 1;
+	}
+	
+	current += dt * rateScale + 0.05;
+	while (current > max) {current -= max;}
+	
+	return current;
+};
+
+Utilities.IsNumber = function (input)
+{
+	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
+	return !isNaN( parseFloat(input) );
+};

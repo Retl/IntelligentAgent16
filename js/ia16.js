@@ -28,71 +28,6 @@ var keyCodeArray = []; //Index corresponds to keycode. Value of 0 is unpressed. 
 // Keys 1-0: Menu Selection
 // Key Tab: Change Menu.
 // Keys Q E Enter: Cancel? Generic Action? 
-
-function moveMarker(xpos, ypos)
-		{
-		if (theMoveMarker == null)
-				{
-				 this.x = xpos;
-				 this.y = ypos;
-				 
-				
-				//Short for Action Point Incrementer.
-				this.isPositionNearby = function(otherX, otherY) 
-				{
-					var result = false;
-					if (Utilities.distance(this.x, this.y, otherX, otherY) <= 32)
-					{
-						//Given position is within 5 pixels of our own position.
-						result = true;
-					}
-				return result;
-				}
-				
-				this.isPlayerNearby = function()
-				{
-					result = false;
-					if(p1 != null)
-					{
-					result = this.isPositionNearby(p1.x, p1.y);
-					}
-					
-					return result;
-				}
-				
-				
-				this.jumpToPosition = function(newX, newY)
-				{
-					this.x = newX;
-					this.y = newY;
-				}
-				
-				//This is a method that should be called on each object of this type every loop. It's similar to 'step' in Gamemaker or Update() in Unity 3D. - Moore
-				//this.update = update;
-				this.update = function()
-				{
-					if (this.isPlayerNearby())
-					{
-						//If the player is nearby, deactivate/remove this mouseMarker.
-						if (p1 != null) {/*p1.jump();*/}
-						theMoveMarker = null;
-					}
-				}
-				
-				this.draw = function()
-				{
-					var offsetX = imgCrsr.width / 2;
-					var offsetY = imgCrsr.height / 2;
-					drawImg(this.x - offsetX, this.y - offsetY, imgCrsr);
-				}
-
-				 return this;
-			 }
-			 else
-			 {
-				return theMoveMarker;
-			 }
-		 }
 		 
 //Free Methods
 // This is more or less our "Main" function, or the main LOOP rather.
@@ -315,16 +250,23 @@ function wrapAround(current, lowEnd, highEnd)
 //Free Input Methods
 function updateMousePosition(e)
 {
-	if (mainCanvas != null)
+	if (gl)
 	{
-		mousex = (e.clientX + document.body.scrollLeft) - mainCanvas.offsetLeft;
-		mousey = (e.clientY + document.body.scrollTop) - mainCanvas.offsetTop;
+		
 	}
-	else
+	//else
 	{
-		mousex = e.clientX + document.body.scrollLeft;
-		mousey = e.clientY + document.body.scrollTop;
+		if (mainCanvas != null)
+		{
+			mousex = (e.clientX + document.body.scrollLeft) - mainCanvas.offsetLeft;
+			mousey = (e.clientY + document.body.scrollTop) - mainCanvas.offsetTop;
+		}
+		else
+		{
+			mousex = e.clientX + document.body.scrollLeft;
+			mousey = e.clientY + document.body.scrollTop;
 
+		}
 	}
 }	
 
