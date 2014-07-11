@@ -56,4 +56,21 @@ function main ()
 	imgbb16.src='./images/fp_downhard_lr.png';//The page will blow up if we don't load the image data before we get to the draw. Better to put the images in the onload or header somewhere.
 	
 	GLDraw.start();
+	
+	var testEventHolder;
+	var testEventHolder.report = function ()
+	{
+		;
+	}
+	var testListener;
+	var testListener.report = function ()
+	{
+		console.log("I heard an event!");
+	}
+	
+	var testListener.handleEvent = function (e)
+	{
+		testListener.report();
+		console.log(e);
+	}
 }

@@ -42,14 +42,14 @@ function player (xpos, ypos, myid, mynum)
 	
 	this.moveTowardsPos = function(targetX, targetY)
 		{
-			this.xspeed = (targetX - this.x) / 10;
-			this.yspeed = (targetY - this.y) / 10;
+			this.xspeed = (targetX - this.x);
+			this.yspeed = (targetY - this.y);
 		};
 	
 	this.update = function()
 		{
-			this.x += this.xspeed;
-			this.y += this.yspeed;
+			this.x += this.xspeed * dt;
+			this.y += this.yspeed * dt;
 			
 			//Stay within the playing area.
 			if (this.x < 0)
@@ -77,7 +77,7 @@ function player (xpos, ypos, myid, mynum)
 			}
 			
 			//Make the graphic spin!
-			this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)));
+			this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)) / 10);
 		};
 	
 	this.draw = function()
