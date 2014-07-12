@@ -54,8 +54,36 @@ Utilities.isFunction = function (input)
 	return (typeof input == 'function');
 };
 
-Utilities.clamp = function (input)
+Utilities.clamp = function (val, min, max)
 {
-	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
-	return !isNaN( parseFloat(input) );
+	val = Math.max(min, val);
+	val = Math.min(max, val);
+	return val;
+};
+
+Utilities.lerp = function (x1, y1, x2, y2, ratio)
+{
+	var x = -1;
+	var y = -1;
+	if (Utilities.isNumber(ratio) && ratio == 0) {x = x1; y = y1;}
+	
+	if (Utilities.isNumber(x1) && Utilities.isNumber(y1) && Utilities.isNumber(x2) && Utilities.isNumber(y2) && Utilities.isNumber(ratio))
+	{
+		if (ratio == 0)
+		{
+			x = x1;
+			y = y1;
+		}
+		else
+		{
+			x = x1 + ((x2 - x1) * ratio); //Originpoint + (length / portion)
+			y = y1 + ((y2 - y1) * ratio);
+		}
+	}
+	
+	var result = {};
+	result.x = x;
+	result.y = y;
+	
+	return result;
 };

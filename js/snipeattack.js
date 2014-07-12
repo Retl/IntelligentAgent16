@@ -6,7 +6,7 @@ var snipeAttack = function (xpos, ypos, originator)
     this.xorg = 32;
     this.yorg = 32;
     
-    this.maxLifetime = 0.2;
+    this.maxLifetime = 0.4;
     this.lifetime = this.maxLifetime;
     
     if (Utilities.isNumber(xpos))
@@ -61,8 +61,13 @@ var snipeAttack = function (xpos, ypos, originator)
     {
         if (gl)
         {
-            var col = 'rgba(255,255,255,'+ this.lifetime/this.maxLifetime +')';
+            var ratio = this.lifetime/this.maxLifetime;
+            var lerp = Utilities.lerp(this.xorg, this.yorg, this.x, this.y, ratio)
+            var col = 'rgba(255,255,255,'+ ratio +')';
+            var myGeom = Geometry.circle(16, 8, this.lifetime, this.maxLifetime);
+            
             CanvasDraw.drawLine(this.xorg, this.yorg, this.x, this.y, col);
+            CanvasDraw.drawPolygon(lerp.x, lerp.y, myGeom, col);
         }
         else
         {
