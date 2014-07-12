@@ -22,7 +22,166 @@ var theLastE;
 
 var keyCodeArray = []; //Index corresponds to keycode. Value of 0 is unpressed. Value of 1 is pressed. Value of 2 is just-pressed.
 
-//var theMoveMarker = null;
+var Game = function () {};
+
+Game.updateables = [];
+Game.removables = [];
+
+
+Game.addUpdateable = function (obj)
+{
+	Game.updateables.push(obj);
+};
+
+Game.removeUpdateable = function (obj)
+{
+	var result = false;
+	var i = this.updateables.indexOf(obj);
+	if (i > -1) 
+	{
+		this.updateables.splice(i, 1);
+		result = true;	
+	}
+
+	return result;
+};
+
+Game.removeUpdateableDelayed = function (obj)
+{
+	Game.removables.push(obj);
+};
+
+Game.update = function ()
+{
+	if (gamePlaying)
+	{
+		//Update the timer.
+		var currentUpdate = Date.now();
+		dt = (currentUpdate - lastUpdate) / 1000.0;
+		lastUpdate = currentUpdate;
+
+		timeRemaining -= dt;
+		timeElapsed = (currentUpdate - firstUpdate) / 1000.0;
+
+		if (timeRemaining <= 0)
+		{
+			timeRemaining = 0;
+			gamePlaying = false;
+			localStorage.setItem("highscore", highscore);
+		}
+	}
+
+	//Update the player character.
+
+	for (i = 0; i < Game.updateables.length; i++)
+	{
+		if (Utilities.isFunction(Game.updateables[i].update))
+		{
+			Game.updateables[i].update();
+		}
+	}
+
+	if(p1 != null)
+	{
+		//p1.apInc();
+		//p1.update();
+
+		//p1.x = mousex;
+		//p1.y = mousey;
+		clearDisplay();
+		testDrawBlackRect();
+		//drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
+		//drawCircleMarker(p1.x, p1.y);
+
+		if (score > highscore) {highscore = score;} //Updates the highscore after it has been broken.
+
+		drawTextSmall(32, 32, "Highscore: " + highscore);
+		drawTextSmall(32, 48, "Score: " + score);
+		drawTextSmall(32, 64, "Time Remaining: " + timeRemaining.toFixed(2));
+		drawTextSmall(32, 80, "Time Spent: " + timeElapsed.toFixed(2));
+		drawTextSmall(32, 96, "dt: " + dt);
+
+
+		//p1.draw();
+
+		//drawRectAtb(p1);
+
+		/*
+		//Playing around with animated Hexagons.
+		drawHexagon(0, 0);
+		drawHexagonScaled(64, 0, 2);
+
+		whichSide = Math.floor(Math.random()*6) + 1
+		drawHexagonSide(96, 3, whichSide);
+		countCycles += 1;
+		whichSide = (countCycles % 6) + 1;
+		drawHexagonSideScaled(128, 0, whichSide, 2);
+		*/
+
+		//Demonstration related text.
+		//drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
+		//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
+		//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
+
+		//Display things to help in debugging the game.
+		if (debugMode) 
+		{
+			drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); 
+			if (theMoveMarker != null && p1 != null) 
+			{
+				drawTextSmall(32, 144, "IsPlayerNearby(); " + theMoveMarker.isPlayerNearby());
+				drawTextSmall(32, 160, "IsPositionNearby(); " + theMoveMarker.isPositionNearby(p1.x, p1.y));
+				drawTextSmall(32, 176, "distance() <= 5; " + Utilities.distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y) <= 16);
+				drawTextSmall(32, 194, "distance(); " + Utilities.distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y));
+			}
+		}
+
+	}
+
+	//if(theMoveMarker != null){theMoveMarker.update();} //Gotta check again after the update, as update can unset it before drawing.
+	//if(theMoveMarker != null){theMoveMarker.draw();}
+
+	/*
+	for (i = 0; i < 10; i++)
+	{
+		if (blnArray[i] != null)
+		{
+			blnArray[i].update();
+			blnArray[i].draw();
+		}
+	}
+	*/
+
+	if (gl != null)
+	{
+		//Do stuff?
+		GLDraw.clear();
+	}
+
+	//Process the inputs captured...
+	processSpecialKeys();
+	//NOTE: All input processing should be done before you end the input cycle.
+	endInputCycle();
+	
+	Game.draw();
+	
+	while (Game.removables.length > 0)
+	{
+		Game.removeUpdateableImmediate(Game.removables.length - 1);
+		Game.removables.pop();
+	}
+};
+
+Game.draw = function ()
+{
+	for (i = 0; i < Game.updateables.length; i++)
+	{
+		if (Utilities.isFunction(Game.updateables[i].draw))
+		{
+			Game.updateables[i].draw();
+		}
+	}
+}
 
 
 // Keys 1-0: Menu Selection
@@ -31,109 +190,6 @@ var keyCodeArray = []; //Index corresponds to keycode. Value of 0 is unpressed. 
 		 
 //Free Methods
 // This is more or less our "Main" function, or the main LOOP rather.
-		
-		function updateEverything()
-		{
-			
-			if (gamePlaying)
-			{
-				//Update the timer.
-				var currentUpdate = Date.now();
-				dt = (currentUpdate - lastUpdate) / 1000.0;
-				lastUpdate = currentUpdate;
-				
-				timeRemaining -= dt;
-				timeElapsed = (currentUpdate - firstUpdate) / 1000.0;
-				
-				if (timeRemaining <= 0)
-				{
-					timeRemaining = 0;
-					gamePlaying = false;
-					localStorage.setItem("highscore", highscore);
-				}
-			}
-			
-			//Update the player character.
-			if(p1 != null)
-			{
-			//p1.apInc();
-			p1.update();
-			
-			//p1.x = mousex;
-			//p1.y = mousey;
-			clearDisplay();
-			testDrawBlackRect();
-			//drawCircle(mainCanvas.width / 2, mainCanvas.height / 2, calcDistance(mainCanvas.width / 2, mainCanvas.height / 2, p1.x, p1.y));
-			//drawCircleMarker(p1.x, p1.y);
-			
-			if (score > highscore) {highscore = score;} //Updates the highscore after it has been broken.
-			
-			drawTextSmall(32, 32, "Highscore: " + highscore);
-			drawTextSmall(32, 48, "Score: " + score);
-			drawTextSmall(32, 64, "Time Remaining: " + timeRemaining.toFixed(2));
-			drawTextSmall(32, 80, "Time Spent: " + timeElapsed.toFixed(2));
-			drawTextSmall(32, 96, "dt: " + dt);
-			
-			
-			p1.draw();
-			
-			//drawRectAtb(p1);
-			
-			/*
-			//Playing around with animated Hexagons.
-			drawHexagon(0, 0);
-			drawHexagonScaled(64, 0, 2);
-	
-			whichSide = Math.floor(Math.random()*6) + 1
-			drawHexagonSide(96, 3, whichSide);
-			countCycles += 1;
-			whichSide = (countCycles % 6) + 1;
-			drawHexagonSideScaled(128, 0, whichSide, 2);
-			*/
-			
-			//Demonstration related text.
-			//drawTextSmall(32, 128, "A pale imitation of some aspects of the FFXIII ATB (and an unrelated circle thing)."); 
-			//drawTextSmall(32, 144, "Press the 1(!) key to drain 100 points of ACT.");
-			//drawTextSmall(32, 160, "Press the Shift key to 'paradigm shift' and get an ACT refresh if you've built up enough.");
-			
-			//Display things to help in debugging the game.
-			if (debugMode) 
-			{
-				drawTextSmall(32, 128, "Content of input array: " + keyCodeArray.join()); 
-				if (theMoveMarker != null && p1 != null) 
-				{
-					drawTextSmall(32, 144, "IsPlayerNearby(); " + theMoveMarker.isPlayerNearby());
-					drawTextSmall(32, 160, "IsPositionNearby(); " + theMoveMarker.isPositionNearby(p1.x, p1.y));
-					drawTextSmall(32, 176, "distance() <= 5; " + Utilities.distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y) <= 16);
-					drawTextSmall(32, 194, "distance(); " + Utilities.distance(theMoveMarker.x, theMoveMarker.y, p1.x, p1.y));
-				}
-			}
-			
-			}
-			
-			if(theMoveMarker != null){theMoveMarker.update();} //Gotta check again after the update, as update can unset it before drawing.
-			if(theMoveMarker != null){theMoveMarker.draw();}
-			
-			for (i = 0; i < 10 /*blnArray.length()*/; i++)
-			{
-				if (blnArray[i] != null)
-				{
-					blnArray[i].update();
-					blnArray[i].draw();
-				}
-			}
-			
-			if (gl != null)
-			{
-				//Do stuff?
-				GLDraw.clear();
-			}
-			
-			//Process the inputs captured...
-			processSpecialKeys();
-			//NOTE: All input processing should be done before you end the input cycle.
-			endInputCycle();
-		}
 		
 		
 		//HANDLING USER INPUT
@@ -162,7 +218,7 @@ var keyCodeArray = []; //Index corresponds to keycode. Value of 0 is unpressed. 
 				
 				if (p1 != null)
 				{
-					p1.moveTowardsPos(mousex, mousey);
+					p1.clickAction(mousex, mousey);
 				}
 			}
 		}

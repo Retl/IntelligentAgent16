@@ -21,17 +21,17 @@ Utilities.randomIntInRange = function(min, max)
 
 Utilities.rotationalSpin = function (current, max, rateScale)
 {
-	if (!Utilities.IsNumber(current))
+	if (!Utilities.isNumber(current))
 	{
 		current = 0;
 	}
 	
-	if (!Utilities.IsNumber(max))
+	if (!Utilities.isNumber(max))
 	{
 		max = 10;
 	}
 	
-	if (!Utilities.IsNumber(rateScale))
+	if (!Utilities.isNumber(rateScale))
 	{
 		rateScale = 1;
 	}
@@ -42,7 +42,19 @@ Utilities.rotationalSpin = function (current, max, rateScale)
 	return current;
 };
 
-Utilities.IsNumber = function (input)
+Utilities.isNumber = function (input)
+{
+	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
+	return !isNaN( parseFloat(input) );
+};
+
+Utilities.isFunction = function (input)
+{
+	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
+	return (typeof input == 'function');
+};
+
+Utilities.clamp = function (input)
 {
 	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
 	return !isNaN( parseFloat(input) );

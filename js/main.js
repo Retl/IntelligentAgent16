@@ -27,12 +27,12 @@ function main ()
 	highscore = localStorage.getItem("highscore");
 	if (highscore == null)
 	{
-		highscore = 5000;
+		highscore = 2000;
 	}
 	FLOORHEIGHT = 320;
 	timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
 	countCycles = 0;
-	mainTimer = setInterval("updateEverything();", timerspeed);
+	mainTimer = setInterval("Game.update();", timerspeed);
 	p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
 
 	//Setup the balloons.
@@ -56,21 +56,4 @@ function main ()
 	imgbb16.src='./images/fp_downhard_lr.png';//The page will blow up if we don't load the image data before we get to the draw. Better to put the images in the onload or header somewhere.
 	
 	GLDraw.start();
-	
-	var testEventHolder;
-	var testEventHolder.report = function ()
-	{
-		;
-	}
-	var testListener;
-	var testListener.report = function ()
-	{
-		console.log("I heard an event!");
-	}
-	
-	var testListener.handleEvent = function (e)
-	{
-		testListener.report();
-		console.log(e);
-	}
 }

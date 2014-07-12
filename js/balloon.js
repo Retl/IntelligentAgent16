@@ -73,4 +73,5 @@ function balloon(xpos, ypos)
 			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle(16));
 		}
 	}
+	Game.addUpdateable(this);
  };

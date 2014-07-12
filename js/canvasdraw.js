@@ -45,3 +45,22 @@ CanvasDraw.drawPolygonStroke = function (x, y, poly, col)
 		ctx.stroke();
 	}
 };
+
+CanvasDraw.drawLine = function (x1, y1, x2, y2, col)
+{
+	if (Utilities.isNumber(x1) && Utilities.isNumber(y1) && Utilities.isNumber(x2) && Utilities.isNumber(y2))
+		{
+		var c=document.getElementById("mainCanvas");
+		var ctx=c.getContext("2d");
+		if (typeof col == 'undefined')
+		{
+			col = '#fff';
+		}
+		ctx.strokeStyle = col;
+		ctx.beginPath();
+		ctx.moveTo(x1, y1);
+		ctx.lineTo(x2, y2);
+		ctx.closePath();
+		ctx.stroke();
+	}
+};

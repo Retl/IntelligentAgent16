@@ -52,6 +52,7 @@ function moveMarker(xpos, ypos)
                 //If the player is nearby, deactivate/remove this mouseMarker.
                 if (p1 != null) {/*p1.jump();*/}
                 theMoveMarker = null;
+				Game.removeUpdateable(this);
             }
             
             //Make the graphic spin!
@@ -86,6 +87,7 @@ function moveMarker(xpos, ypos)
 			
         }
 		
+		Game.addUpdateable(this);
 		result = this;
      }
      else

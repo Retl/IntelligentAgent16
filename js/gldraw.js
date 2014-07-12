@@ -43,3 +43,11 @@ GLDraw.initWebGL = function (canvas)
 	
 	return gl;
 };
+
+GLDraw.initShaders = function ()
+{
+	var fragmentShader = getShader(gl, "shader-fs");
+	var fragmentShader = getShader(gl, "shader-vs");
+	
+	shaderProgram = gl.createProgram();
+};
