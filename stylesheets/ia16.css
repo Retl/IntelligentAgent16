@@ -1,11 +1,18 @@
 /*
 Page Author: Carlis Moore
 Creation Date: 10 July 2014
-Last Modified:  10 July 2014
+Last Modified:  12 July 2014
 Purpose: Cascading stylesheet for the game Intelligent Agent 16.
 
 Permissions: If you want to use elements from this stylesheet, please ask me first. I'm generally pretty open and willing to share, but it's better to ask than to not. You can email me at carlis.moore@gmail.com.
 */
+
+html, body 
+{
+  width:  100%;
+  height: 100%;
+  margin: 0px;
+}
 
 .hexButton
 {

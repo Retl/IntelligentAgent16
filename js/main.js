@@ -19,8 +19,12 @@ var imgCrsr;
 
 function main ()
 {
-	gameWidth = 800;
-	gameHeight = 600;
+	gameWidth = window.innerWidth;
+	gameHeight = window.innerHeight;
+	
+	
+	playingArea = document.getElementById("mainCanvas").width = gameWidth;
+	playingArea = document.getElementById("mainCanvas").height = gameHeight;
 
 	main;
 	score = 0;
