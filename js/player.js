@@ -8,9 +8,13 @@ function player (xpos, ypos, myid, mynum)
 	 //Properties that change frequently.
 	 this.x = xpos;
 	 this.y = ypos;
+	 
+	 this.moveStyleNear = true;
 	 this.moveSpeedScalar = 2;
+	 
 	 this.xspeed = 0;
 	 this.yspeed = 0;
+	 
 	 this.canAttack = true;
 	 this.myid = myid;
 	 this.mynum = mynum;
@@ -25,42 +29,42 @@ function player (xpos, ypos, myid, mynum)
 	
 	//START: Methods
 	
-		this.horizontalReflect = function(dampen)
-		{
-			this.xspeed /= -dampen;
-		};
-		
-		this.verticalReflect = function(dampen)
-		{
-			this.yspeed /= -dampen;
-		};
-		
-		this.fullReflect = function(dampen)
-		{
-			this.verticalReflect(dampen);
-			this.horizontalReflect(dampen);
-		};
-	
-		this.moveTowardsPos = function(targetX, targetY)
-		{
-			this.xspeed = (targetX - this.x) * this.moveSpeedScalar;
-			this.yspeed = (targetY - this.y) * this.moveSpeedScalar;
-		};
-		
-		this.snipeAttack = function(targetX, targetY)
-		{
-			//Create a snipeAttack instance at the target destination.
-			new snipeAttack(targetX, targetY, this);
-		};
-		
-		this.burstAttack = function(targetX, targetY)
-		{
-			//Create a burst attack instance at the target destination.
-		};
+	this.horizontalReflect = function(dampen)
+	{
+		this.xspeed /= -dampen;
+	};
+
+	this.verticalReflect = function(dampen)
+	{
+		this.yspeed /= -dampen;
+	};
+
+	this.fullReflect = function(dampen)
+	{
+		this.verticalReflect(dampen);
+		this.horizontalReflect(dampen);
+	};
+
+	this.moveTowardsPos = function(targetX, targetY)
+	{
+		this.xspeed = (targetX - this.x) * this.moveSpeedScalar;
+		this.yspeed = (targetY - this.y) * this.moveSpeedScalar;
+	};
+
+	this.snipeAttack = function(targetX, targetY)
+	{
+		//Create a snipeAttack instance at the target destination.
+		new snipeAttack(targetX, targetY, this);
+	};
+
+	this.burstAttack = function(targetX, targetY)
+	{
+		//Create a burst attack instance at the target destination.
+	};
 		
 	this.clickAction = function (tx, ty)
 	{
-		if (Utilities.distance(this.x, this.y, tx, ty) < this.influenceRadius)
+		if ((Utilities.distance(this.x, this.y, tx, ty) < this.influenceRadius) == this.moveStyleNear)
 		{
 			this.moveTowardsPos(tx, ty);
 			//Also do the close-range knockback attack to the nearest enemy within influence range.
@@ -70,6 +74,11 @@ function player (xpos, ypos, myid, mynum)
 		{
 			this.snipeAttack(tx, ty);
 		}
+	}
+	
+	this.toggleMoveStyle = function ()
+	{
+		this.moveStyleNear = !this.moveStyleNear;
 	}
 	
 	this.update = function()
