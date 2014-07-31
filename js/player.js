@@ -1,5 +1,8 @@
-function player (xpos, ypos, myid, mynum)
+function player(xpos, ypos, myid, mynum)
 {
+	//Inherit from gameObject.
+	gameObject.call(this, xpos, ypos);
+	
 	//START: Properties
 	//Properties that shouldn't change after the object is instantiated.
 		this.accelerationHorizontalRate = 16;
@@ -81,35 +84,44 @@ function player (xpos, ypos, myid, mynum)
 		this.moveStyleNear = !this.moveStyleNear;
 	}
 	
+	this.updatePos = function ()
+	{
+		this.x += this.xspeed * dt;
+		this.y += this.yspeed * dt;
+	}
+	
+	this.clampPosToPlayingArea = function ()
+	{
+		//Stay within the playing area.
+		if (this.x < 0)
+		{
+			this.x = 0;
+			this.horizontalReflect(2);
+		}
+
+		if (this.x > gameWidth)
+		{
+			this.x = gameWidth;
+			this.horizontalReflect(2);
+		}
+
+		if (this.y < 0)
+		{
+			this.y = 0;
+			this.verticalReflect(2);
+		}
+
+		if (this.y > gameHeight)
+		{
+			this.y -= (this.y - gameHeight);
+			this.verticalReflect(2);
+		}
+	}
+	
 	this.update = function()
 		{
-			this.x += this.xspeed * dt;
-			this.y += this.yspeed * dt;
-			
-			//Stay within the playing area.
-			if (this.x < 0)
-			{
-				this.x = 0;
-				this.horizontalReflect(2);
-			}
-			
-			if (this.x > gameWidth)
-			{
-				this.x = gameWidth;
-				this.horizontalReflect(2);
-			}
-			
-			if (this.y < 0)
-			{
-				this.y = 0;
-				this.verticalReflect(2);
-			}
-			
-			if (this.y > gameHeight)
-			{
-				this.y -= (this.y - gameHeight);
-				this.verticalReflect(2);
-			}
+			this.updatePos();
+			this.clampPosToPlayingArea();
 			
 			//Make the graphic spin!
 			this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)) / 10);
