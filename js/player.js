@@ -31,29 +31,6 @@ function player(xpos, ypos, myid, mynum)
 	//END: Properties
 	
 	//START: Methods
-	
-	this.horizontalReflect = function(dampen)
-	{
-		this.xspeed /= -dampen;
-	};
-
-	this.verticalReflect = function(dampen)
-	{
-		this.yspeed /= -dampen;
-	};
-
-	this.fullReflect = function(dampen)
-	{
-		this.verticalReflect(dampen);
-		this.horizontalReflect(dampen);
-	};
-
-	this.moveTowardsPos = function(targetX, targetY)
-	{
-		this.xspeed = (targetX - this.x) * this.moveSpeedScalar;
-		this.yspeed = (targetY - this.y) * this.moveSpeedScalar;
-	};
-
 	this.snipeAttack = function(targetX, targetY)
 	{
 		//Create a snipeAttack instance at the target destination.
@@ -83,40 +60,7 @@ function player(xpos, ypos, myid, mynum)
 	{
 		this.moveStyleNear = !this.moveStyleNear;
 	}
-	
-	this.updatePos = function ()
-	{
-		this.x += this.xspeed * dt;
-		this.y += this.yspeed * dt;
-	}
-	
-	this.clampPosToPlayingArea = function ()
-	{
-		//Stay within the playing area.
-		if (this.x < 0)
-		{
-			this.x = 0;
-			this.horizontalReflect(2);
-		}
 
-		if (this.x > gameWidth)
-		{
-			this.x = gameWidth;
-			this.horizontalReflect(2);
-		}
-
-		if (this.y < 0)
-		{
-			this.y = 0;
-			this.verticalReflect(2);
-		}
-
-		if (this.y > gameHeight)
-		{
-			this.y -= (this.y - gameHeight);
-			this.verticalReflect(2);
-		}
-	}
 	
 	this.update = function()
 		{
@@ -150,6 +94,4 @@ function player(xpos, ypos, myid, mynum)
 			};
 	
 	//END: Methods
-	
-	Game.addUpdateable(this);
 }

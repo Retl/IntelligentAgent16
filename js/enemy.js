@@ -81,8 +81,10 @@ function enemy(xpos, ypos)
 					score += 10;
 					timeRemaining += 0.05;
 				}
-				this.jumpToRandomPosition();
+				//this.jumpToRandomPosition();
 				//this.active = false;
+				this.destroy();
+				
 			}
 		}
 	}

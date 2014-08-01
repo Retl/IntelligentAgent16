@@ -37,6 +37,7 @@ function main ()
 	timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
 	countCycles = 0;
 	mainTimer = setInterval("Game.update();", timerspeed);
+	var throwaway = setInterval(function () {a = new enemyChaser(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);}, 500);
 	p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
 
 	//Setup the balloons.

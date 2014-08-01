@@ -2,14 +2,22 @@ function enemyChaser(xpos, ypos)
 {
     //Inherit from enemy object.
     enemy.call(this, xpos, ypos);
+	
+	//this.moveTowardsPos(p1.x,p1.y);
     
     //Overwriting the enemy's version of update with our own.'
     this.update = function()
 	{
+        
+        this.updatePos();
+		this.clampPosToPlayingArea();
+        
 		if (this.active)
 		{
-            
-            
+			if (p1 != null)
+			{
+				this.moveTowardsPos(p1.x,p1.y);
+			}
 			if (this.isPlayerNearby())
 			{
 				//If the player is nearby, move this balloon, and give points.
@@ -20,21 +28,11 @@ function enemyChaser(xpos, ypos)
 				}
 				//this.jumpToRandomPosition();
 				//this.active = false;
-                this.destroy();
+				this.destroy();
+				
 			}
-            else
-            {
-                if(p1 != null)
-                {
-                    //Move towards player.
-                }
-            }
-            
 		}
-	}
-    
-    this.destroy = function ()
-    {
-        Game.removeUpdateable(this);
-    }
+	};
 };
+
+//a.moveTowardsPos(p1.x,p1.y)
