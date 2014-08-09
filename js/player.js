@@ -63,35 +63,43 @@ function player(xpos, ypos, myid, mynum)
 
 	
 	this.update = function()
-		{
-			this.updatePos();
-			this.clampPosToPlayingArea();
-			
-			//Make the graphic spin!
-			this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)) / 10);
-		};
+	{
+		this.updatePos();
+		this.clampPosToPlayingArea();
+		
+		speed = Utilities.magnitude({x:this.xspeed, y:this.yspeed});
+
+		//Make the graphic spin!
+		this.rotationOffset = Utilities.rotationalSpin(this.rotationOffset, this.maxRotationOffset, (Math.abs(this.xspeed) + Math.abs(this.yspeed)) / 10);
+	};
 	
 	this.draw = function()
-			{
-				//Our offset for this one is horizontal center, bottom of image.
-				var offsetX = 0;
-				var offsetY = 0;
-				
-				var myGeom = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
-				var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset);
-				
-				if (gl)
-				{
-					//PLACEHOLDER - replace all of this with GL drawing instructions.
-					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
-					CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
-				}
-				else
-				{
-					CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
-					CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
-				}
-			};
+	{
+		//Our offset for this one is horizontal center, bottom of image.
+		var offsetX = 0;
+		var offsetY = 0;
+
+		var myGeom = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
+		var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset);
+
+		if (gl)
+		{
+			//PLACEHOLDER - replace all of this with GL drawing instructions.
+			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
+			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+		}
+		else
+		{
+			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
+			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+		}
+	};
+			
+	this.push = function (forceVector)
+	{
+		this.xspeed += forceVector.x;
+		this.yspeed += forceVector.y;
+	};
 	
 	//END: Methods
 }

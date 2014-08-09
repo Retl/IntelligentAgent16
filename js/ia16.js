@@ -65,6 +65,12 @@ Game.callOnAll = function (fun)
 	}
 }
 
+Game.clearRecords = function ()
+{
+	localStorage.removeItem("highscore");
+	localStorage.removeItem("highspeed");
+};
+
 Game.update = function ()
 {
 	if (gamePlaying)
@@ -82,6 +88,7 @@ Game.update = function ()
 			timeRemaining = 0;
 			gamePlaying = false;
 			localStorage.setItem("highscore", highscore);
+			localStorage.setItem("highspeed", highspeed);
 		}
 	}
 
@@ -101,12 +108,14 @@ Game.update = function ()
 		//drawCircleMarker(p1.x, p1.y);
 
 		if (score > highscore) {highscore = score;} //Updates the highscore after it has been broken.
+		if (speed > highspeed) {highspeed = speed;} //Updates the highspeed after it has been broken.
 
 		drawTextSmall(32, 32, "Highscore: " + highscore);
 		drawTextSmall(32, 48, "Score: " + score);
 		drawTextSmall(32, 64, "Time Remaining: " + timeRemaining.toFixed(2));
 		drawTextSmall(32, 80, "Time Spent: " + timeElapsed.toFixed(2));
-		drawTextSmall(32, 96, "dt: " + dt);
+		drawTextSmall(32, 96, "High Speed: " + Number.parseFloat(highspeed).toFixed(2));
+		drawTextSmall(32, 112, "dt: " + dt);
 
 
 		//p1.draw();

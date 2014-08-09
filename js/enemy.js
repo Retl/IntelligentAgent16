@@ -7,12 +7,14 @@ function enemy(xpos, ypos)
     this.active = true;
     this.oldx = this.x;
     
-    this.moveSpeedScalar = 2;
+    this.moveSpeedScalar = 32;
 
     this.xspeed = 0;
     this.yspeed = 0;
 	
 	this.hp = 10;
+	
+	this.timeBonus = 0.1;
 	
 	this.isPlayerNearby = function()
 	{
@@ -102,8 +104,18 @@ function enemy(xpos, ypos)
         if (theGameObject.constructor == snipeAttack)
         {
 			//This enemy was shot. Take damage.
-			console.log("I'm hit! ("+ theGameObject.toString() + typeof theGameObject +")");
+			if (debugMode) {console.log("I'm hit! ("+ theGameObject.toString() + typeof theGameObject +")");}
 			this.takeDamage(theGameObject.power);
+        }
+		
+		if (theGameObject.constructor == player)
+        {
+			//This enemy Rammed into the player. Destroy it and move the player away.
+			var pushVector = {};
+			pushVector.x = this.xspeed;
+			pushVector.y = this.yspeed;
+			theGameObject.push(pushVector);
+			this.destroy(this.hp);
         }
 	};
 	
@@ -116,7 +128,7 @@ function enemy(xpos, ypos)
 			if (gamePlaying)
 			{
 				score += 10;
-				timeRemaining += 0.05;
+				timeRemaining += this.timeBonus;
 			}
 			//this.jumpToRandomPosition();
 			//this.active = false;

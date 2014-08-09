@@ -4,6 +4,8 @@ var gameHeight;
 var main;
 var score;
 var highscore;
+var speed;
+var highspeed;
 var FLOORHEIGHT;
 var timerspeed; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
 var countCycles;
@@ -28,11 +30,18 @@ function main ()
 
 	main;
 	score = 0;
+	speed = 0;
 	highscore = localStorage.getItem("highscore");
 	if (highscore == null)
 	{
 		highscore = 2000;
 	}
+	highspeed = localStorage.getItem("highspeed");
+	if (highspeed == null)
+	{
+		highspeed = 32;
+	}
+	
 	FLOORHEIGHT = 320;
 	timerspeed = 1000/60; //1000 miliseconds is one second. Divide by 60 for 60updates per second.
 	countCycles = 0;
@@ -40,6 +49,7 @@ function main ()
 	var throwaway = setInterval(function () {a = new enemyChaser(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);}, 500);
 	p1 = new player(200, 200, 0, 0); //Keyword new is necessary to instantiate.
 
+	/*
 	//Setup the balloons.
 	blnArray = [];
 
@@ -47,6 +57,7 @@ function main ()
 	{
 		blnArray[i] = new balloon(i * 64 + 32, FLOORHEIGHT );
 	}
+	*/
 
 
 	theMoveMarker = null;

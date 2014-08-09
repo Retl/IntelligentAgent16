@@ -2,6 +2,7 @@ function enemyChaser(xpos, ypos)
 {
     //Inherit from enemy object.
     enemy.call(this, xpos, ypos);
+	this.moveSpeedScalar = 16;
 	
 	//this.moveTowardsPos(p1.x,p1.y);
     
@@ -16,6 +17,7 @@ function enemyChaser(xpos, ypos)
 		{
 			if (p1 != null)
 			{
+				this.moveSpeedScalar += 2 * dt;
 				this.moveTowardsPos(p1.x,p1.y);
 			}
 			if (this.isPlayerNearby())
@@ -23,11 +25,9 @@ function enemyChaser(xpos, ypos)
 				//If the player is nearby, move this balloon, and give points.
 				if (gamePlaying)
 				{
-					score += 10;
-					timeRemaining += 0.05;
+					;
 				}
-				//this.jumpToRandomPosition();
-				//this.active = false;
+				this.onCollision(p1);
 				this.destroy();
 				
 			}
