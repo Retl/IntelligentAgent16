@@ -51,6 +51,20 @@ Game.removeUpdateableDelayed = function (obj)
 	Game.removables.push(obj);
 };
 
+Game.callOnAll = function (fun)
+{
+	//Performs the function defined in "Fun" on all gameObjects in the Game.
+
+	for (i = 0; i < Game.updateables.length; i++)
+	{
+		if (Utilities.isFunction(Game.updateables[i].update))
+		{
+			//fun(Game.updateables[i]);
+			fun(Game.updateables[i], arguments[1]);
+		}
+	}
+}
+
 Game.update = function ()
 {
 	if (gamePlaying)
@@ -71,15 +85,8 @@ Game.update = function ()
 		}
 	}
 
-	//Update the player character.
-
-	for (i = 0; i < Game.updateables.length; i++)
-	{
-		if (Utilities.isFunction(Game.updateables[i].update))
-		{
-			Game.updateables[i].update();
-		}
-	}
+	//Call the update() method on all game objects.
+	Game.callOnAll(function (currentGameObject) {currentGameObject.update();});
 
 	if(p1 != null)
 	{

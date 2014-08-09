@@ -46,7 +46,7 @@ function player(xpos, ypos, myid, mynum)
 	{
 		if ((Utilities.distance(this.x, this.y, tx, ty) < this.influenceRadius) == this.moveStyleNear)
 		{
-			this.moveTowardsPos(tx, ty);
+			this.moveTowardsPos(tx, ty, 32);
 			//Also do the close-range knockback attack to the nearest enemy within influence range.
 			this.burstAttack(tx, ty);
 		}

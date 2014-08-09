@@ -2,19 +2,22 @@ function moveMarker(xpos, ypos)
 {
 	var result;
 	if (theMoveMarker == null)
-        {
-         this.x = xpos;
-         this.y = ypos;
-         
-         this.rotationOffset = 0;
-         this.maxRotationOffset = 10;
-         
-         this.radius = 4;
-         this.influenceRadius = 16;
+		{
+			
+		gameObject.call(this, xpos, ypos);
+			
+		this.x = xpos;
+		this.y = ypos;
+
+		this.rotationOffset = 0;
+		this.maxRotationOffset = 10;
+
+		this.radius = 4;
+		this.influenceRadius = 16;
 
 
-        //Short for Action Point Incrementer.
-        this.isPositionNearby = function(otherX, otherY) 
+		//Short for Action Point Incrementer.
+		this.isPositionNearby = function(otherX, otherY) 
         {
             var result = false;
             if (Utilities.distance(this.x, this.y, otherX, otherY) <= 32)

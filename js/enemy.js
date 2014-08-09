@@ -12,6 +12,8 @@ function enemy(xpos, ypos)
     this.xspeed = 0;
     this.yspeed = 0;
 	
+	this.hp = 10;
+	
 	this.isPlayerNearby = function()
 	{
 		result = false;
@@ -22,12 +24,6 @@ function enemy(xpos, ypos)
 		
 		return result;
 	}
-    
-    this.moveTowardsPos = function(targetX, targetY)
-	{
-		this.xspeed = (targetX - this.x) * this.moveSpeedScalar;
-		this.yspeed = (targetY - this.y) * this.moveSpeedScalar;
-	};
     
     	this.updatePos = function ()
 	{
@@ -73,6 +69,7 @@ function enemy(xpos, ypos)
         
 		if (this.active)
 		{
+			/*
 			if (this.isPlayerNearby())
 			{
 				//If the player is nearby, move this balloon, and give points.
@@ -86,6 +83,7 @@ function enemy(xpos, ypos)
 				this.destroy();
 				
 			}
+			*/
 		}
 	}
 	
@@ -98,4 +96,31 @@ function enemy(xpos, ypos)
 			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle(16));
 		}
 	}
+	
+	this.onCollision = function (theGameObject)
+	{
+        if (theGameObject.constructor == snipeAttack)
+        {
+			//This enemy was shot. Take damage.
+			console.log("I'm hit! ("+ theGameObject.toString() + typeof theGameObject +")");
+			this.takeDamage(theGameObject.power);
+        }
+	};
+	
+	this.takeDamage = function (dmg)
+	{
+		this.hp = Utilities.clamp(this.hp - dmg, 0, this.hp);
+		if (this.hp <= 0)
+		{
+			//Enemy defeated, destroy it and reward the player.
+			if (gamePlaying)
+			{
+				score += 10;
+				timeRemaining += 0.05;
+			}
+			//this.jumpToRandomPosition();
+			//this.active = false;
+			this.destroy();
+		}
+	};
  };

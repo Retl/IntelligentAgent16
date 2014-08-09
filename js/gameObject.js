@@ -14,7 +14,9 @@ function gameObject(xpos, ypos)
 	 this.x = xpos;
 	 this.y = ypos;
 	 
-	 this.moveSpeedScalar = 2;
+	 this.radius = 16;
+	 
+	 this.moveSpeedScalar = 16;
 	 
 	 this.xspeed = 0;
 	 this.yspeed = 0;
@@ -26,7 +28,7 @@ function gameObject(xpos, ypos)
     this.isPositionNearby = function(otherX, otherY) 
 	{
         var result = false;
-        if (Utilities.distance(this.x, this.y, otherX, otherY) <= 32)
+        if (Utilities.distance(this.x, this.y, otherX, otherY) <= this.radius*2)
         {
             //Given position is within 5 pixels of our own position.
             result = true;
@@ -58,25 +60,36 @@ function gameObject(xpos, ypos)
 		{
 			this.jumpToPosition(this.x, Utilities.randomIntInRange((gameHeight/2) - 64, (gameHeight/2) + 64));
 		}
-	}
+	};
 	
 	this.jumpToPosition = function(newX, newY)
 	{
 		this.x = newX;
 		this.y = newY;
-	}
+	};
 
-	this.moveTowardsPos = function(targetX, targetY)
+	this.moveTowardsPos = function(targetX, targetY, speed)
 	{
-		this.xspeed = (targetX - this.x) * this.moveSpeedScalar;
-		this.yspeed = (targetY - this.y) * this.moveSpeedScalar;
+		if (!Utilities.isNumber(speed))
+		{
+			speed = this.moveSpeedScalar;
+		}
+		var targetVector = {};
+		
+		targetVector.x = (targetX - this.x);
+		targetVector.y = (targetY - this.y);
+		
+		targetVector = Utilities.normalize(targetVector);
+		
+		this.xspeed = targetVector.x * speed;
+		this.yspeed = targetVector.y * speed;
 	};
 	
 	this.updatePos = function ()
 	{
 		this.x += this.xspeed * dt;
 		this.y += this.yspeed * dt;
-	}
+	};
 	
 	this.clampPosToPlayingArea = function ()
 	{
@@ -104,7 +117,25 @@ function gameObject(xpos, ypos)
 			this.y -= (this.y - gameHeight);
 			this.verticalReflect(2);
 		}
-	}
+	};
+	
+	this.containsLocationOfObject = function (theObject)
+	{
+		result = false;
+		if (this.isPositionNearby(theObject.x, theObject.y))
+		{
+			result = true;
+			this.onCollision(theObject);
+			return result;
+		}
+		
+		return result;
+	};
+	
+	this.onCollision = function (theGameObject)
+	{
+		console.log(this.toString() + " has detected a collission with " + theGameObject.toString() + ".")
+	};
 	
 	this.update = function()
 		{
@@ -120,9 +151,8 @@ function gameObject(xpos, ypos)
     this.destroy = function ()
     {
         Game.removeUpdateable(this);
-    }
+    };
 	
 	//END: Methods
-	
 	Game.addUpdateable(this);
 }

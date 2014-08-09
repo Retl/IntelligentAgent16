@@ -1,5 +1,8 @@
 function balloon(xpos, ypos)
 {
+	
+	gameObject.call(this, xpos, ypos);
+	
 	 this.x = xpos;
 	 this.y = ypos;
 	 this.visible = true;

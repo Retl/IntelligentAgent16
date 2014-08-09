@@ -61,6 +61,26 @@ Utilities.clamp = function (val, min, max)
 	return val;
 };
 
+Utilities.magnitude = function (inputVector)
+{
+	if (Utilities.isNumber(inputVector.x) && Utilities.isNumber(inputVector.y))
+	{
+		return Math.sqrt(Math.pow(inputVector.x,2) + Math.pow(inputVector.y,2));
+	}
+}
+
+Utilities.normalize = function (inputVector)
+{
+	if (Utilities.isNumber(inputVector.x) && Utilities.isNumber(inputVector.y))
+	{
+		var mag = Utilities.magnitude(inputVector);
+		inputVector.x /= mag;
+		inputVector.y /= mag;
+	}
+	
+	return inputVector; //This is a reference, not a copy. Faster, but be careful.
+};
+
 Utilities.lerp = function (x1, y1, x2, y2, ratio)
 {
 	var x = -1;

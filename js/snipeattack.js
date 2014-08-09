@@ -1,10 +1,14 @@
 var snipeAttack = function (xpos, ypos, originator)
 {
+    gameObject.call(this, xpos, ypos);
+    
     this.active = true;
     this.x = 0;
     this.y = 0;
     this.xorg = 32;
     this.yorg = 32;
+    
+    this.power = 10;
     
     this.maxLifetime = 0.4;
     this.lifetime = this.maxLifetime;
@@ -75,5 +79,20 @@ var snipeAttack = function (xpos, ypos, originator)
         }
     }
     
+    //Game.callOnAll(function (currentGameObject) {currentGameObject.containsLocationOfObject(this);});
+    this.checkCollisions = function (o, theObject) 
+    {
+        //console.log( this.toString()+ " <- Decting collision with -> " + o.toString());
+        console.log(theObject.x + " " + theObject.y);
+        o.containsLocationOfObject(theObject);
+        theObject.containsLocationOfObject(o);
+    };
+    
+    this.onCollision = function (theGameObject)
+	{
+		console.log("OMG, I shot a thing! ("+ theGameObject.toString() + typeof theGameObject +")");
+	};
+    
+    Game.callOnAll(this.checkCollisions, this);
     Game.addUpdateable(this);
 };
