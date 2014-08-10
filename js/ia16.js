@@ -133,6 +133,8 @@ Game.update = function ()
 		if (score > highscore) {highscore = score;} //Updates the highscore after it has been broken.
 		if (speed > highspeed) {highspeed = speed;} //Updates the highspeed after it has been broken.
 
+		drawTextSmall(32, 16, "You are the big one. Aiming within your Area of Influence moves you. Aiming outside uses the Snipe Shot.");
+		
 		drawTextSmall(32, 32, "Highscore: " + highscore);
 		drawTextSmall(32, 48, "Score: " + score);
 		drawTextSmall(32, 64, "Time Remaining: " + timeRemaining.toFixed(2));

@@ -75,7 +75,13 @@ var snipeAttack = function (xpos, ypos, originator)
         }
         else
         {
+            var ratio = this.lifetime/this.maxLifetime;
+            var lerp = Utilities.lerp(this.xorg, this.yorg, this.x, this.y, ratio)
+            var col = 'rgba(255,255,255,'+ ratio +')';
+            var myGeom = Geometry.circle(16, 8, this.lifetime, this.maxLifetime);
             
+            CanvasDraw.drawLine(this.xorg, this.yorg, this.x, this.y, col);
+            CanvasDraw.drawPolygon(lerp.x, lerp.y, myGeom, col);
         }
     }
     

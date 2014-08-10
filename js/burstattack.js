@@ -9,9 +9,9 @@ var burstAttack = function (xpos, ypos, originator)
     this.yorg = 32;
     
     this.radius = 16 * 4;
-    this.power = 2;
+    this.power = 64;
     
-    this.maxLifetime = 0.4;
+    this.maxLifetime = 0.2;
     this.lifetime = this.maxLifetime;
     
     if (Utilities.isNumber(xpos))
@@ -78,7 +78,13 @@ var burstAttack = function (xpos, ypos, originator)
         }
         else
         {
-            
+            var ratio = this.lifetime/this.maxLifetime;
+			var ratioFlip = (this.maxLifetime - this.lifetime)/this.maxLifetime;
+            var lerp = Utilities.lerp(this.xorg, this.yorg, this.x, this.y, ratio)
+            var col = 'rgba(255,255,255,'+ ratio +')';
+            var myGeom = Geometry.circle(this.radius * 2 * ratioFlip, 8, this.lifetime, this.maxLifetime);
+			
+            CanvasDraw.drawPolygon(this.x, this.y, myGeom, col);
         }
     }
     
