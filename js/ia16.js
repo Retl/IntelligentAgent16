@@ -71,6 +71,29 @@ Game.clearRecords = function ()
 	localStorage.removeItem("highspeed");
 };
 
+Game.generateEnemy = function ()
+{
+	var sel = Utilities.randomIntInRange(0,2);
+	switch (sel)
+	{
+		case 0:
+			a = new enemyChaser(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);
+			break;
+		
+		case 1:
+			a = new enemyChaser(Utilities.randomIntInRange(64, (gameWidth) - 64), gameHeight);
+			break;
+		
+		case 2:
+			a = new enemy(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);
+			break;
+			
+		default:
+			if (debugMode) {console.log("Game.generateEnemy attempted to default on the creation.");}
+			break;
+	}
+};
+
 Game.update = function ()
 {
 	if (gamePlaying)

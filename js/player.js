@@ -39,7 +39,8 @@ function player(xpos, ypos, myid, mynum)
 
 	this.burstAttack = function(targetX, targetY)
 	{
-		//Create a burst attack instance at the target destination.
+		//Create a burst attack instance at the player location.
+		new burstAttack(this.x, this.y, this);
 	};
 		
 	this.clickAction = function (tx, ty)
@@ -80,26 +81,28 @@ function player(xpos, ypos, myid, mynum)
 		var offsetX = 0;
 		var offsetY = 0;
 
-		var myGeom = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
-		var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset);
+		//var myGeom = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
+		
+		var myGeom = Geometry.circle(this.radius * 2 * (Utilities.clamp(timeRemaining, 1, 30) / 30), 8, this.rotationOffset, this.maxRotationOffset);
+		var myGeomOut = Geometry.circle(this.radius * 2, 8, this.rotationOffset, this.maxRotationOffset);
+		
+		//var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, 128, this.rotationOffset, this.maxRotationOffset);
+		//var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, Utilities.clamp(Math.floor(32 * (Utilities.clamp(timeRemaining, 1, 30) / 30)), 3, 32), this.rotationOffset, this.maxRotationOffset);
+		var myInfluenceGeom = Geometry.circle(this.influenceRadius * 2, Math.floor(32 * (Utilities.clamp(timeRemaining, 1, 30) / 30)), this.rotationOffset, this.maxRotationOffset);
 
 		if (gl)
 		{
 			//PLACEHOLDER - replace all of this with GL drawing instructions.
-			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
-			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+			if (gamePlaying) {CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');}
+			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myGeomOut, '#ffffff');
+			if (gamePlaying) {CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');}
 		}
 		else
 		{
-			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');
-			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');
+			if (gamePlaying) {CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, myGeom, '#ffffff');}
+			CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myGeomOut, '#ffffff');
+			if (gamePlaying) {CanvasDraw.drawPolygonStroke(this.x - offsetX, this.y - offsetY, myInfluenceGeom, '#ffffff');}
 		}
-	};
-			
-	this.push = function (forceVector)
-	{
-		this.xspeed += forceVector.x;
-		this.yspeed += forceVector.y;
 	};
 	
 	//END: Methods

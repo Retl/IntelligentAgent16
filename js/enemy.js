@@ -6,6 +6,8 @@ function enemy(xpos, ypos)
     this.visible = true;
     this.active = true;
     this.oldx = this.x;
+	
+	this.stunCooldown = 0;
     
     this.moveSpeedScalar = 32;
 
@@ -27,10 +29,15 @@ function enemy(xpos, ypos)
 		return result;
 	}
     
-    	this.updatePos = function ()
+	this.updatePos = function ()
 	{
 		this.x += this.xspeed * dt;
 		this.y += this.yspeed * dt;
+	}
+	
+	this.updateStun = function ()
+	{
+		return this.stunCooldown = Utilities.clamp(this.stunCooldown - dt, 0, 9999);
 	}
 	
 	this.clampPosToPlayingArea = function ()
@@ -67,6 +74,7 @@ function enemy(xpos, ypos)
 	{
         
         this.updatePos();
+		this.updateStun();
 		this.clampPosToPlayingArea();
         
 		if (this.active)
@@ -107,8 +115,16 @@ function enemy(xpos, ypos)
 			if (debugMode) {console.log("I'm hit! ("+ theGameObject.toString() + typeof theGameObject +")");}
 			this.takeDamage(theGameObject.power);
         }
+		else if (theGameObject.constructor == burstAttack)
+		{
+			//This enemy was burst-attacked. Take damage & knockback.
+			if (debugMode) {console.log("I'm hit! ("+ theGameObject.toString() + typeof theGameObject +")");}
+			this.takeDamage(theGameObject.power * dt);
+			this.stunCooldown = dt * 16;
+			this.push({x:(this.x - theGameObject.x), y:(this.y - theGameObject.y)});
+		}
 		
-		if (theGameObject.constructor == player)
+		else if (theGameObject.constructor == player)
         {
 			//This enemy Rammed into the player. Destroy it and move the player away.
 			var pushVector = {};

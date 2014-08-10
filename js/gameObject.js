@@ -30,7 +30,7 @@ function gameObject(xpos, ypos)
         var result = false;
         if (Utilities.distance(this.x, this.y, otherX, otherY) <= this.radius*2)
         {
-            //Given position is within 5 pixels of our own position.
+            //Given position is within our radius.
             result = true;
         }
         
@@ -130,6 +130,12 @@ function gameObject(xpos, ypos)
 		}
 		
 		return result;
+	};
+	
+	this.push = function (forceVector)
+	{
+		this.xspeed += forceVector.x;
+		this.yspeed += forceVector.y;
 	};
 	
 	this.onCollision = function (theGameObject)

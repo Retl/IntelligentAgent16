@@ -11,6 +11,7 @@ function enemyChaser(xpos, ypos)
 	{
         
         this.updatePos();
+		this.updateStun();
 		this.clampPosToPlayingArea();
         
 		if (this.active)
@@ -18,7 +19,7 @@ function enemyChaser(xpos, ypos)
 			if (p1 != null)
 			{
 				this.moveSpeedScalar += 2 * dt;
-				this.moveTowardsPos(p1.x,p1.y);
+				if (this.stunCooldown <= 0) {this.moveTowardsPos(p1.x,p1.y);}
 			}
 			if (this.isPlayerNearby())
 			{
