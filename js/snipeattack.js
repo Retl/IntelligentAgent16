@@ -55,7 +55,7 @@ var snipeAttack = function (xpos, ypos, originator)
 
             if (this.lifetime == 0)
             {
-                Game.removeUpdateable(this);
+                this.destroy();
                 this.active = false;
             }
         }
@@ -79,7 +79,6 @@ var snipeAttack = function (xpos, ypos, originator)
         }
     }
     
-    //Game.callOnAll(function (currentGameObject) {currentGameObject.containsLocationOfObject(this);});
     this.checkCollisions = function (o, theObject) 
     {
         //console.log( this.toString()+ " <- Decting collision with -> " + o.toString());
@@ -94,5 +93,4 @@ var snipeAttack = function (xpos, ypos, originator)
 	};
     
     Game.callOnAll(this.checkCollisions, this);
-    Game.addUpdateable(this);
 };

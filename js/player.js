@@ -44,9 +44,10 @@ function player(xpos, ypos, myid, mynum)
 		
 	this.clickAction = function (tx, ty)
 	{
-		if ((Utilities.distance(this.x, this.y, tx, ty) < this.influenceRadius) == this.moveStyleNear)
+		var dist = Utilities.distance(this.x, this.y, tx, ty); 
+		if ((dist < this.influenceRadius) == this.moveStyleNear)
 		{
-			this.moveTowardsPos(tx, ty, 32);
+			this.moveTowardsPos(tx, ty, 128 * (dist / this.influenceRadius));
 			//Also do the close-range knockback attack to the nearest enemy within influence range.
 			this.burstAttack(tx, ty);
 		}

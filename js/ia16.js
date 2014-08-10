@@ -116,6 +116,11 @@ Game.update = function ()
 		drawTextSmall(32, 80, "Time Spent: " + timeElapsed.toFixed(2));
 		drawTextSmall(32, 96, "High Speed: " + Number.parseFloat(highspeed).toFixed(2));
 		drawTextSmall(32, 112, "dt: " + dt);
+		
+		if (!gamePlaying)
+		{
+			drawTextSmall(gameWidth / 2, gameHeight / 2, "-{Session Terminated}-");
+		}
 
 
 		//p1.draw();

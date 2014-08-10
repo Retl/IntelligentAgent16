@@ -14,7 +14,7 @@ function enemy(xpos, ypos)
 	
 	this.hp = 10;
 	
-	this.timeBonus = 0.1;
+	this.timeBonus = 0.49;
 	
 	this.isPlayerNearby = function()
 	{

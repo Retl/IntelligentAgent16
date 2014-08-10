@@ -25,8 +25,9 @@ function main ()
 	gameHeight = window.innerHeight;
 	
 	
-	playingArea = document.getElementById("mainCanvas").width = gameWidth;
-	playingArea = document.getElementById("mainCanvas").height = gameHeight;
+	document.getElementById("mainCanvas").width = gameWidth;
+	document.getElementById("mainCanvas").height = gameHeight;
+	playingArea = document.getElementById("mainCanvas");
 
 	main;
 	score = 0;
