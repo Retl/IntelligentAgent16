@@ -40,6 +40,18 @@ function gameObject(xpos, ypos)
 	   return result;
 	};
 	
+	this.isGameObjectNearby = function(other) 
+	{
+        var result = false;
+        if (Utilities.distance(this.x, this.y, other.x, other.y) <= this.radius * 2 + other.radius * 2)
+        {
+            //Given position is within our radius.
+            result = true;
+        }
+        
+	   return result;
+	};
+	
 	this.horizontalReflect = function(dampen)
 	{
 		this.xspeed /= -dampen;

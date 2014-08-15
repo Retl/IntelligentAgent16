@@ -73,7 +73,7 @@ Game.clearRecords = function ()
 
 Game.generateEnemy = function ()
 {
-	var sel = Utilities.randomIntInRange(0,2);
+	var sel = Utilities.randomIntInRange(0,3);
 	switch (sel)
 	{
 		case 0:
@@ -87,6 +87,11 @@ Game.generateEnemy = function ()
 		case 2:
 			a = new enemy(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);
 			break;
+		
+		case 3:
+			a = new bouncer(Utilities.randomIntInRange(64, (gameWidth) - 64), 0);
+			break;
+			
 			
 		default:
 			if (debugMode) {console.log("Game.generateEnemy attempted to default on the creation.");}

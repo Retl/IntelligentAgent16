@@ -1,4 +1,4 @@
-function enemyChaser(xpos, ypos)
+function bouncer(xpos, ypos)
 {
     //Inherit from enemy object.
     enemy.call(this, xpos, ypos);
@@ -6,20 +6,36 @@ function enemyChaser(xpos, ypos)
 	
 	//this.moveTowardsPos(p1.x,p1.y);
     
-    //Overwriting the enemy's version of update with our own.'
+    //Overwriting the enemy's version of update with our own.
+	
+	
+	this.vertiBounce = function()
+	{
+		if (this.y + this.radius > gameHeight)
+		{
+			this.yspeed /= -1.5;
+			if (this.yspeed <= 0 && Utilities.randomIntInRange(0,10) == 10)
+			{
+				this.yspeed -= gameHeight / 10;
+			}
+		}
+	};
+	
     this.update = function()
 	{
         
         this.updatePos();
 		this.updateStun();
+		
+		this.vertiBounce();
+		
 		this.clampPosToPlayingArea();
         
 		if (this.active)
 		{
 			if (p1 != null)
 			{
-				this.moveSpeedScalar += 2 * dt;
-				if (this.stunCooldown <= 0) {this.moveTowardsPos(p1.x,p1.y);}
+				if (this.stunCooldown <= 0) {this.yspeed += 16 * dt;}
 			}
 			if (this.isPlayerNearby())
 			{
@@ -39,7 +55,7 @@ function enemyChaser(xpos, ypos)
 	{
 		if (this.visible && this.active)
 		{
-			CanvasDraw.drawPolygon(this.x, this.y, Geometry.circle(this.radius * 2, 8));
+			CanvasDraw.drawPolygon(this.x, this.y, Geometry.circle(this.radius * 2, 6), '#ff00ff');
 		}
 	}
 	

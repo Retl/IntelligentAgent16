@@ -1,18 +1,12 @@
 function enemy(xpos, ypos)
 {
 	gameObject.call(this, xpos, ypos);
-    this.x = xpos;
-    this.y = ypos;
-    this.visible = true;
-    this.active = true;
+	this.radius = 8;
     this.oldx = this.x;
 	
 	this.stunCooldown = 0;
     
-    this.moveSpeedScalar = 32;
-
-    this.xspeed = 0;
-    this.yspeed = 0;
+    this.moveSpeedScalar = 64;
 	
 	this.hp = 10;
 	
@@ -20,10 +14,15 @@ function enemy(xpos, ypos)
 	
 	this.isPlayerNearby = function()
 	{
+		if (debugMode)
+		{
+			CanvasDraw.drawLine(this.x, this.y, p1.x, p1.y, '#ff0000');
+		}
+		
 		result = false;
 		if(p1 != null)
 		{
-		result = this.isPositionNearby(p1.x, p1.y);
+			result = this.isPositionNearby(p1.x, p1.y);
 		}
 		
 		return result;
@@ -79,21 +78,17 @@ function enemy(xpos, ypos)
         
 		if (this.active)
 		{
-			/*
 			if (this.isPlayerNearby())
 			{
-				//If the player is nearby, move this balloon, and give points.
+				//If the player is nearby, move this enemy, and give points.
 				if (gamePlaying)
 				{
-					score += 10;
-					timeRemaining += 0.05;
+					;
 				}
-				//this.jumpToRandomPosition();
-				//this.active = false;
+				this.onCollision(p1);
 				this.destroy();
 				
 			}
-			*/
 		}
 	}
 	
@@ -101,9 +96,7 @@ function enemy(xpos, ypos)
 	{
 		if (this.visible && this.active)
 		{
-			var offsetX = 8;
-			var offsetY = 8;
-			CanvasDraw.drawPolygon(this.x - offsetX, this.y - offsetY, Geometry.circle(16));
+			CanvasDraw.drawPolygon(this.x, this.y, Geometry.circle(this.radius * 2, 4), '#ff8800');
 		}
 	}
 	
@@ -151,4 +144,9 @@ function enemy(xpos, ypos)
 			this.destroy();
 		}
 	};
+	
+	if (p1 != null)
+	{
+		if (this.stunCooldown <= 0) {this.moveTowardsPos(p1.x,p1.y);}
+	}
  };
