@@ -220,13 +220,7 @@ Game.update = function ()
 
 Game.draw = function ()
 {
-	for (i = 0; i < Game.updateables.length; i++)
-	{
-		if (Utilities.isFunction(Game.updateables[i].draw))
-		{
-			Game.updateables[i].draw();
-		}
-	}
+	Game.callOnAll(function (currentGameObject) {if (currentGameObject.visible) {currentGameObject.draw();}});
 }
 
 

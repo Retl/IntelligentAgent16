@@ -20,6 +20,9 @@ function gameObject(xpos, ypos)
 	 
 	 this.xspeed = 0;
 	 this.yspeed = 0;
+	 
+	 this.visible = true;
+	 this.active = true;
 	
 	//END: Properties
 	
@@ -144,15 +147,18 @@ function gameObject(xpos, ypos)
 	};
 	
 	this.update = function()
-		{
-			this.updatePos();
-			this.clampPosToPlayingArea();
-		};
+	{
+		this.updatePos();
+		this.clampPosToPlayingArea();
+	};
 	
 	this.draw = function()
-			{
-				console.log(this.toString() + ": attempting to draw with unimplemented draw function.");
-			};
+	{
+		if (this.visible)
+		{
+			console.log(this.toString() + ": attempting to draw with unimplemented draw function.");
+		}
+	};
     
     this.destroy = function ()
     {
