@@ -15,6 +15,8 @@ function gameObject(xpos, ypos)
 	 this.y = ypos;
 	 
 	 this.radius = 16;
+	 this.width = this.radius * 2;
+	 this.height = this.radius * 2;
 	 
 	 this.moveSpeedScalar = 16;
 	 
