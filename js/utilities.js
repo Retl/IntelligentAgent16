@@ -54,6 +54,15 @@ Utilities.isFunction = function (input)
 	return (typeof input == 'function');
 };
 
+Utilities.isDefined = function (input)
+{
+	//Check the input to see if AT LEAST the first character is a digit. If it is, true. If this isn't a number, return false.
+	var result = false;
+	if (typeof input != "undefined") {result = true;}
+	return result;
+};
+
+
 Utilities.clamp = function (val, min, max)
 {
 	val = Math.max(min, val);
